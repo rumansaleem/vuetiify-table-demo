@@ -1,14 +1,22 @@
 <template>
   <v-container style="height: 100vh">
-    <v-combobox
+    <v-select
       :items="columnNames"
       v-model="selectedColumnNames"
       dense
       multiple
       outlined
-      small-chips
       label="Columns"
-    ></v-combobox>
+    >
+      <template v-slot:selection="{ item, index }">
+        <v-chip small v-if="index < 2">
+          <span>{{ item }}</span>
+        </v-chip>
+        <span v-if="index === 2" class="grey--text text-caption">
+          + {{ selectedColumnNames.length - 2 }} other column(s) selected
+        </span>
+      </template>
+    </v-select>
     <v-data-table
       dense
       :headers="selectedColumns"
